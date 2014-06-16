@@ -19,9 +19,19 @@ else:
 	root = os.getcwd() # set this...
 	dupSrc = 0
 
+# custom command line options
+buildDebug = False
+optParams = ARGUMENTS.get('opt', None)
+if optParams:
+	buildDebug = 'debug' in optParams
+
 # directories for objects and binaries
-buildDir = os.path.join(root, 'build')
-binDir = os.path.join(root, 'bin')
+if buildDebug: # If you use python 2.5 or above you can use the nicer a if test else b syntax here
+	buildSubDir = 'debug'
+else:
+	buildSubDir = 'release'
+buildDir = os.path.join(root, 'build', buildSubDir)
+binDir = os.path.join(root, 'bin', buildSubDir)
 
 # shared environment settings
 env = Environment(
@@ -38,16 +48,27 @@ if operatingSystem == 'Linux':
 		CCFLAGS=['-m%s' % compileBits, '-pthread', '-march=%s' % march[targetArch]],
 		LINKFLAGS=['-m%s' % compileBits, ]
 		)
-	env.Append(
-		CCFLAGS=['-ggdb3', ],
-		LINKFLAGS=['-ggdb3', ])
+	if buildDebug:
+		env.Append(CCFLAGS=['-ggdb3'], LINKFLAGS=['-ggdb3'] )
+	else:
+		env.Append(CPPDEFINES=['-DNDEBUG'])
 else: # Windows
 	env.Append(CPPDEFINES=['WIN%s' % compileBits, 'WIN%s_LEAN_AND_MEAN'  % compileBits])
 	dupSrc = 0
 	env.Append(
 		CPPDEFINES=['_DEBUG', ],
-		CCFLAGS=['/EHsc', '/MDd', '/FC', ],
+		CCFLAGS=['/EHsc', '/FC', '/sdl', '/bigobj', ],
 		LINKFLAGS=['/DEBUG']);
+	env.Append(LINKFLAGS=['/DEBUG']) #this generates PDB -> http://msdn.microsoft.com/en-us/library/xe4t6fc1.aspx. Note that I want pdb in release mode for post-release debugging but you may not...
+	if buildDebug:
+		env.Append(
+			CPPDEFINES=['_DEBUG'],
+			CCFLAGS=['/MDd', '/Od', '/RTC1', ])
+	else:
+		env.Append(
+			CPPDEFINES=['NDEBUG'],
+			CCFLAGS=['/MD', '/O2', '/Oi', '/GL', ],
+			LINKFLAGS=['/LTCG ']) # Microsoft recommend linking with LTCG when GL turned on to improve build performance
 
 print 'compiling: arch=%s, os=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compileBits, dupSrc)
 
