@@ -1,0 +1,18 @@
+Import('*')
+
+projectName='lib'
+sampleLibraryEnv = env.Clone()
+sampleLibrary = sampleLibraryEnv.SharedLibrary(projectName, Glob('*.cpp'))
+#libs.append(sampleLibrary)
+
+Default(sampleLibrary)
+Default(sampleLibraryEnv.Install(binDir, sampleLibrary))
+#sampleLibraryEnv.Install(binDir, sampleLibrary)
+#stuff = sampleLibraryEnv.Install(binDir, sampleLibrary)
+#print [str(x) for x in stuff]
+#Default(stuff)
+#Alias('all', stuff)
+#Alias('all', sampleLibraryEnv.Install(binDir, sampleLibrary))
+#Default(Alias('all'))
+#sampleLibraryEnv.Install(binDir, sampleLibrary)
+#sampleLibraryEnv.Install(binDir, 'SampleLibrary.dll')

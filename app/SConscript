@@ -1,0 +1,16 @@
+Import('*')
+
+projectName='app'
+sampleApplicationEnv = env.Clone()
+sampleApplicationEnv.Append(LIBS=['lib'])
+#sampleApplicationEnv.Append(LIBS=libs)
+
+sampleApplication = sampleApplicationEnv.Program(projectName, Glob('*.cpp'))
+#Depends(sampleApplication, libs)
+
+Default(sampleApplication)
+Default(sampleApplicationEnv.Install(binDir, sampleApplication))
+#sampleApplicationEnv.Install(binDir, 'SampleLibrary.dll')
+#Alias('all', sampleApplicationEnv.Install(binDir, sampleApplication))
+#Default(Alias('all'))
+#sampleApplicationEnv.Install(binDir, sampleApplication)
