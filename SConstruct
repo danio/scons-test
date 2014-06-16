@@ -70,6 +70,12 @@ else: # Windows
 			CCFLAGS=['/MD', '/O2', '/Oi', '/GL', ],
 			LINKFLAGS=['/LTCG ']) # Microsoft recommend linking with LTCG when GL turned on to improve build performance
 
+# set sconsign database file to be platform specific so that builds can be done in parallel on multiple platforms
+sconsignFile = '.sconsign.' + env['PLATFORM']
+# Note that if you store source code on network disk, you should add
+# code here to store the sconsign file on a local disk to speed up windows builds 
+SConsignFile(sconsignFile)
+
 print 'compiling: arch=%s, os=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compileBits, dupSrc)
 
 for project in projects:
