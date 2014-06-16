@@ -1,6 +1,9 @@
 Import('*')
 
+# code specific to this 
 projectName='module1'
+
+# common code that should go into a builder...
 sampleLibraryEnv = env.Clone()
 sampleLibrary = sampleLibraryEnv.SharedLibrary(projectName, Glob('*.cpp'))
 

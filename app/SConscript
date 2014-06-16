@@ -1,13 +1,15 @@
 import os
 Import('*')
 
+# code specific to this app
 projectName='app'
+requiredLibraries = ['module1']
+
+# common code that should go into a builder...
 sampleApplicationEnv = env.Clone()
-sampleApplicationEnv.Append(LIBS=['module1'])
-sampleApplicationEnv.Append(LIBPATH=[os.path.join(buildDir, 'module1')])
-
+sampleApplicationEnv.Append(LIBS=[lib for lib in requiredLibraries])
+sampleApplicationEnv.Append(LIBPATH=[os.path.join(buildDir, lib) for lib in requiredLibraries])
 #print sampleApplicationEnv.Dump('LIBS') # This is the syntax necessary to look at SCons environment variables
-
 sampleApplication = sampleApplicationEnv.Program(projectName, Glob('*.cpp'))
 
 Default(sampleApplication)
