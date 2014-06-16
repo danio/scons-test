@@ -4,11 +4,9 @@ import string
 import sys
 
 # configuration setup
-compiler = 'gcc44'
 operatingSystem = platform.system().title()
 if 'Windows' in operatingSystem:
 	operatingSystem = 'Windows'
-	compiler = 'vc11'
 targetArch = 'x86'
 compileBits = '32'
 test = False
@@ -51,7 +49,7 @@ else: # Windows
 		CCFLAGS=['/EHsc', '/MDd', '/FC', ],
 		LINKFLAGS=['/DEBUG']);
 
-print 'compiling: arch=%s, os=%s, comp=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compiler, compileBits, dupSrc)
+print 'compiling: arch=%s, os=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compileBits, dupSrc)
 
 projects=['module1', 'app']
 
