@@ -1,0 +1,8 @@
+Import('*')
+
+projectName='module1'
+sampleLibraryEnv = env.Clone()
+sampleLibrary = sampleLibraryEnv.SharedLibrary(projectName, Glob('*.cpp'))
+
+Default(sampleLibrary)
+Default(sampleLibraryEnv.Install(binDir, sampleLibrary))

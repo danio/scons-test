@@ -3,9 +3,10 @@ Import('*')
 
 projectName='app'
 sampleApplicationEnv = env.Clone()
-sampleApplicationEnv.Append(LIBS=['lib'])
-sampleApplicationEnv.Append(LIBPATH=[os.path.join(buildDir, 'lib')])
-#print sampleApplicationEnv.Dump('LIBPATH') # This is the syntax necessary to look at the SCons environment 
+sampleApplicationEnv.Append(LIBS=['module1'])
+sampleApplicationEnv.Append(LIBPATH=[os.path.join(buildDir, 'module1')])
+#sampleApplicationEnv['LIBS'] += ['tib', 'tibutil', 'tibgroup']
+print sampleApplicationEnv.Dump('LIBS') # This is the syntax necessary to look at the SCons environment 
 
 sampleApplication = sampleApplicationEnv.Program(projectName, Glob('*.cpp'))
 #Depends(sampleApplication, libs)

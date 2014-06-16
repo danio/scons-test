@@ -15,10 +15,11 @@ test = False
 
 # Environment
 if operatingSystem == 'Windows':
-	root = os.getcwd() #os.path.join('D:/', 'sconstest2')
+	root = os.getcwd()
+	dupSrc = 1
 else:
 	root = os.getcwd() # set this...
-dupSrc = 1
+	dupSrc = 0
 
 # directories for objects and binaries
 buildDir = os.path.join(root, 'build')
@@ -52,10 +53,10 @@ else: # Windows
 
 print 'compiling: arch=%s, os=%s, comp=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compiler, compileBits, dupSrc)
 
-projects=['lib', 'app']
+projects=['module1', 'app']
 
 for project in projects:
 	variantDir = os.path.join(buildDir, project)
 	projEnv = env.Clone()
-	projEnv.Append(LIBPATH=[os.path.join(buildDir, 'lib')])
+	projEnv.Append(LIBPATH=[os.path.join(buildDir, 'module1')])
 	projEnv.SConscript(os.path.join(project, 'SConscript'), exports='env buildDir binDir', variant_dir=variantDir, duplicate=dupSrc)

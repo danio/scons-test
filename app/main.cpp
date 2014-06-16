@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
-#include "lib/SampleClassA.h"
+#include "module1/SampleClassA.h"
 
 using namespace SampleLibrary;
 
