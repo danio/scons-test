@@ -40,13 +40,12 @@ env = Environment(
 	TARGET_ARCH=targetArch,
 	CPPPATH=[Dir('.')],
 	LIBPATH=[buildDir]
-    )
+	)
 
 if operatingSystem == 'Linux':
 	march = {'x86':'i686', 'x86_64':'x86-64'}
 
 	env.Append(
-		CPPDEFINES=['LINUX', ],
 		CCFLAGS=['-m%s' % compileBits, '-pthread', '-march=%s' % march[targetArch]],
 		LINKFLAGS=['-m%s' % compileBits, ]
 		)
@@ -58,9 +57,8 @@ else: # Windows
 	env.Append(CPPDEFINES=['WIN%s' % compileBits, 'WIN%s_LEAN_AND_MEAN'  % compileBits])
 	dupSrc = 0
 	env.Append(
-		CPPDEFINES=['_DEBUG', ],
 		CCFLAGS=['/EHsc', '/FC', '/sdl', '/bigobj', ],
-		LINKFLAGS=['/DEBUG']);
+		);
 	env.Append(LINKFLAGS=['/DEBUG']) #this generates PDB -> http://msdn.microsoft.com/en-us/library/xe4t6fc1.aspx. Note that I want pdb in release mode for post-release debugging but you may not...
 	if buildDebug:
 		env.Append(
