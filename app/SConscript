@@ -5,7 +5,7 @@ Import('*')
 projectName='app'
 requiredLibraries = ['module1']
 
-# common code that should go into a builder...
+# common code that should go into an application builder...
 sampleApplicationEnv = env.Clone()
 sampleApplicationEnv.Append(LIBS=[lib for lib in requiredLibraries])
 sampleApplicationEnv.Append(LIBPATH=[os.path.join(buildDir, lib) for lib in requiredLibraries])
