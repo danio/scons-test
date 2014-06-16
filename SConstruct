@@ -17,8 +17,7 @@ test = False
 if operatingSystem == 'Windows':
 	root = os.getcwd() #os.path.join('D:/', 'sconstest2')
 else:
-	root = '' # set this...
-	sys.exit()
+	root = os.getcwd() # set this...
 dupSrc = 1
 
 # directories for objects and binaries
@@ -56,7 +55,7 @@ print 'compiling: arch=%s, os=%s, comp=%s, bits=%s, dupsrc=%d' % (targetArch, op
 projects=['lib', 'app']
 
 for project in projects:
-	#VariantDir(buildDir, project)
-	#SConscript(os.path.join(project, 'SConscript'), exports='env binDir', variant_dir=buildDir, duplicate=dupSrc)
+	variantDir = os.path.join(buildDir, project)
 	projEnv = env.Clone()
-	projEnv.SConscript(os.path.join(project, 'SConscript'), exports='env binDir', variant_dir=buildDir, duplicate=dupSrc)
+	projEnv.Append(LIBPATH=[os.path.join(buildDir, 'lib')])
+	projEnv.SConscript(os.path.join(project, 'SConscript'), exports='env buildDir binDir', variant_dir=variantDir, duplicate=dupSrc)
