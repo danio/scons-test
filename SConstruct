@@ -3,6 +3,8 @@ import platform
 import string
 import sys
 
+projects=['module1', 'app']
+
 # configuration setup
 operatingSystem = platform.system().title()
 if 'Windows' in operatingSystem:
@@ -26,7 +28,7 @@ if optParams:
 	buildDebug = 'debug' in optParams
 
 # directories for objects and binaries
-if buildDebug: # If you use python 2.5 or above you can use the nicer a if test else b syntax here
+if buildDebug: # If you use python 2.5 or above you can use the nicer "a if test else b" syntax here
 	buildSubDir = 'debug'
 else:
 	buildSubDir = 'release'
@@ -71,8 +73,6 @@ else: # Windows
 			LINKFLAGS=['/LTCG ']) # Microsoft recommend linking with LTCG when GL turned on to improve build performance
 
 print 'compiling: arch=%s, os=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSystem, compileBits, dupSrc)
-
-projects=['module1', 'app']
 
 for project in projects:
 	variantDir = os.path.join(buildDir, project)
