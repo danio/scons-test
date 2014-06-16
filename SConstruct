@@ -76,6 +76,4 @@ print 'compiling: arch=%s, os=%s, bits=%s, dupsrc=%d' % (targetArch, operatingSy
 
 for project in projects:
 	variantDir = os.path.join(buildDir, project)
-	projEnv = env.Clone()
-	projEnv.Append(LIBPATH=[os.path.join(buildDir, 'module1')])
-	projEnv.SConscript(os.path.join(project, 'SConscript'), exports='env buildDir binDir', variant_dir=variantDir, duplicate=dupSrc)
+	SConscript(os.path.join(project, 'SConscript'), exports='env buildDir binDir', variant_dir=variantDir, duplicate=dupSrc)
