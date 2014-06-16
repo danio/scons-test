@@ -14,11 +14,11 @@ compileBits = '32'
 test = False
 
 # Environment
+# Using os.getcwd() is just for demonstration purposes. In practice you might get it from an environment variable, relative path, ...
+outputDir = os.getcwd() # Set the directory for building into. Use a local disk for speed.
 if operatingSystem == 'Windows':
-	root = os.getcwd()
 	dupSrc = 1
 else:
-	root = os.getcwd() # set this...
 	dupSrc = 0
 
 # custom command line options
@@ -32,13 +32,13 @@ if buildDebug: # If you use python 2.5 or above you can use the nicer "a if test
 	buildSubDir = 'debug'
 else:
 	buildSubDir = 'release'
-buildDir = os.path.join(root, 'build', buildSubDir)
-binDir = os.path.join(root, 'bin', buildSubDir)
+buildDir = os.path.join(outputDir, 'build', buildSubDir)
+binDir = os.path.join(outputDir, 'bin', buildSubDir)
 
 # shared environment settings
 env = Environment(
 	TARGET_ARCH=targetArch,
-	CPPPATH=[os.getcwd()],
+	CPPPATH=[Dir('.')],
 	LIBPATH=[buildDir]
     )
 
